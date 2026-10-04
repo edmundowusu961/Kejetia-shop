@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kejetia Shop | Kumasi Online Market</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Arial}
+body{background:#fffaf5;color:#222}
+header{background:#b45309;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:10}
+.hero{background:linear-gradient(135deg,#fbbf24,#92400e);color:#fff;padding:28px 16px;text-align:center}
+.hero h2{font-size:1.6rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+@media(min-width:768px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border-radius:12px;border:1px solid #f3e8d3;overflow:hidden}
+.card img{width:100%;height:120px;object-fit:cover;background:#fef3c7}
+.card.p{padding:8px}
+.card h3{font-size:14px}
+.card b{color:#b45309}
+.card button{width:100%;background:#111;color:#fff;border:0;padding:8px;border-radius:8px;margin-top:6px}
+#cart{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:3px solid #b45309;padding:14px;display:none;max-height:70vh;overflow:auto}
+#cart.show{display:block}
+</style>
+</head>
+<body>
+<header><h3>🏪 Kejetia Shop</h3><div onclick="toggleCart()" style="background:#fff;color:#b45309;padding:6px 12px;border-radius:20px;font-weight:bold">🛒 <span id="c">0</span></div></header>
+<div class="hero"><h2>Kumasi's Biggest Market — Now Online</h2><p>Authentic Ghanaian products from Kejetia Market</p><p style="margin-top:8px;font-size:13px">Built by Edmund Owusu | Kumasi, Ghana</p></div>
+<div class="grid" id="grid"></div>
+<div id="cart"><h3>Cart</h3><div id="list" style="margin:8px 0"></div><b>Total: GHS <span id="t">0</span></b><br><button onclick="wa()" style="width:100%;background:#25D366;color:#fff;border:0;padding:12px;border-radius:10px;margin-top:10px;font-weight:bold">Order via WhatsApp</button><button onclick="toggleCart()" style="width:100%;background:#eee;border:0;padding:10px;border-radius:10px;margin-top:8px">Close</button></div>
+<script>
+const products=[
+{name:"Kente Cloth - Ashanti",price:350,img:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400"},
+{name:"Shea Butter Pure",price:45,img:"https://images.unsplash.com/photo-1608571423902-eed4a94d8108?w=400"},
+{name:"Ghana Sandals",price:120,img:"https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"},
+{name:"African Print 6yrds",price:80,img:"https://images.unsplash.com/photo-1584302052179-e2d8a41a8cc6?w=400"},
+{name:"Palm Oil 5L",price:95,img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400"},
+{name:"Kejetia Spices",price:30,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400"},
+{name:"Handwoven Basket",price:65,img:"https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400"},
+{name:"African Black Soap",price:25,img:"https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=400"}
+];
+let cart=[];
+function render(){document.getElementById('grid').innerHTML=products.map((p,i)=>`<div class="card"><img src="${p.img}"><div class="p"><h3>${p.name}</h3><b>GHS ${p.price}</b><button onclick="add(${i})">Add to Cart</button></div></div>`).join('')}
+function add(i){cart.push(products[i]);document.getElementById('c').innerText=cart.length;up()}
+function up(){let tot=cart.reduce((s,p)=>s+p.price,0);document.getElementById('t').innerText=tot;document.getElementById('list').innerHTML=cart.map(c=>`• ${c.name} - ${c.price}`).join('<br>')}
+function toggleCart(){document.getElementById('cart').classList.toggle('show')}
+function wa(){let m="Hello Kejetia Shop! Order:%0A"+cart.map(c=>`- ${c.name} GHS ${c.price}`).join('%0A')+"%0ATotal GHS "+document.getElementById('t').innerText;window.open(`https://wa.me/233550000000?text=${m}`,'_blank')}
+render();
+</script>
+</body>
+</html>
